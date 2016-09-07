@@ -17,6 +17,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+//        let sp = self.window?.rootViewController as! UISplitViewController
+//        let tab = sp.viewControllers[0] as! UITabBarController
+//        let nav = tab.viewControllers?[0] as! UINavigationController
+//        let categoryController = nav.viewControllers[0] as! HomePageTableViewController
+//        categoryController.managedObjectContext = self.managedObjectContext
         return true
     }
 

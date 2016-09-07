@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "AssignLocationViewController.btnSetPerformed(UIButton!) -&gt; ():AssignLocationViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "sender.superview.superview">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "HomePageTableViewController.addCategory(Category) -&gt; ():HomePageTableViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "c.color">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "HomePageTableViewController.viewDidLoad() -&gt; ():HomePageTableViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "c.title">
+            </PersistentString>
+            <PersistentString
+               value = "c.color">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "AddCategoryViewController.viewDidLoad() -&gt; ():AddCategoryViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "naviBar.topItem">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "HomePageTableViewController.tableView(UITableView, cellForRowAtIndexPath : NSIndexPath) -&gt; UITableViewCell:HomePageTableViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "categoryList[indexPath.row].color">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "AddCategoryViewController.(btnDonePerformed(AnyObject) -&gt; ()).(closure #1):AddCategoryViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.c">
+            </PersistentString>
+            <PersistentString
+               value = "self.c.color">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>
