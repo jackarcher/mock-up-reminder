@@ -40,7 +40,6 @@ class AddCategoryViewController: UIViewController, UIPickerViewDelegate, UIPicke
     // indicate if this VC is for editing(True) or for Creating(False)
     var isEditCategory: Bool = false
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.

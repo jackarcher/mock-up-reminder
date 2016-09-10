@@ -42,12 +42,18 @@ class HomePageTableViewController: UITableViewController ,HomePageDelegate {
                 for r in result! {
                     let c = r as! Category
                     categoryList.append(c)
+                    print("\(c.title!):\(c.order!)")
                 }
             }
         } catch{
             let fetchError = error as NSError
             print(fetchError)
         }
+        
+        categoryList.sortInPlace({
+        c1, c2 in
+            return Int(c1.order!)<Int(c2.order!)
+        })
         
         // hide footer, it's just ugly I thought
         tableView.tableFooterView = UIView()
@@ -105,6 +111,7 @@ class HomePageTableViewController: UITableViewController ,HomePageDelegate {
  
 
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
         if tableView.editing{
             // to edit page
             performSegueWithIdentifier("categoryDetail", sender: indexPath)
@@ -128,9 +135,14 @@ class HomePageTableViewController: UITableViewController ,HomePageDelegate {
         if editingStyle == .Delete {
             // Delete the row from the data source and db
             managedObjectContext.deleteObject(categoryList.removeAtIndex(indexPath.row))
+            
             // Delete thr row from view
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
             
+            for i in indexPath.row ..< categoryList.count{
+                categoryList[i].setValue(i, forKey: "order")
+            }
+            performSegueWithIdentifier("afterDeleteCategory", sender: nil)
             // Commit the change to db
             do{
                 try self.managedObjectContext.save()
@@ -145,18 +157,40 @@ class HomePageTableViewController: UITableViewController ,HomePageDelegate {
     
     // Override to support rearranging the table view.
     override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-        //swap 2 element
-        let temp = categoryList[fromIndexPath.row]
-        categoryList[fromIndexPath.row] = categoryList[toIndexPath.row]
-        categoryList[toIndexPath.row] = temp
-        
-        // commit to db
-        
-        // print to cmd
-        for c in categoryList{
-            print(c.title)
+        categoryList.insert(categoryList.removeAtIndex(fromIndexPath.row), atIndex: toIndexPath.row)
+        var max:Int
+        var min:Int
+        if fromIndexPath.row > toIndexPath.row{
+            max = fromIndexPath.row
+            min = toIndexPath.row
+        } else if fromIndexPath.row < toIndexPath.row{
+            max = toIndexPath.row
+            min = fromIndexPath.row
+        } else {
+            max = 0
+            min = 0
         }
-        print("***")
+        if max != min {
+            for i in min ... max{
+                categoryList[i].setValue(i, forKey: "order")
+            }
+            // commit to db
+            do {
+                try self.managedObjectContext.save()
+            } catch {
+                print(error)
+            }
+            // sort the list
+            categoryList.sortInPlace({
+                c1, c2 in
+                return Int(c1.order!)<Int(c2.order!)
+            })
+        }
+        
+        // debug
+        for c in categoryList{
+            print("\(c.order!):\(c.title!)")
+        }
     }
  
 
@@ -171,8 +205,9 @@ class HomePageTableViewController: UITableViewController ,HomePageDelegate {
     func addCategory(c:Category) {
         // add to the array
         categoryList.append(c)
+        c.setValue(categoryList.indexOf(c), forKey: "order")
+        print(c)
         // add to db
-        self.managedObjectContext.insertObject(c)
         do{
             try self.managedObjectContext.save()
             print("Insert commited")
@@ -214,6 +249,9 @@ class HomePageTableViewController: UITableViewController ,HomePageDelegate {
                 target.c = nil
                 target.isEditCategory = false
             }
+        } else if segue.identifier == "afterDeleteCategory"{
+            let tab = segue.destinationViewController as! UITabBarController
+            tab.selectedIndex = 0
         }
     }
     /*

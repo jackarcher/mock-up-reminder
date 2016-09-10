@@ -66,7 +66,7 @@ class AssignLocationViewController: UIViewController, MKMapViewDelegate, CLLocat
     
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
         // customized annotation view
-        
+
         // for current location do nothing
         if (annotation is MKUserLocation){
             return nil

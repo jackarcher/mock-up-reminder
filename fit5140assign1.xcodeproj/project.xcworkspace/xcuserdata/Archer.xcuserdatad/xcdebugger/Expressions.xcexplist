@@ -3,10 +3,46 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "AssignLocationViewController.btnSetPerformed(UIButton!) -&gt; ():AssignLocationViewController.swift">
+         contextName = "HomePageTableViewController.viewDidLoad() -&gt; ():HomePageTableViewController.swift">
          <PersistentStrings>
             <PersistentString
-               value = "sender.superview.superview">
+               value = "c.title">
+            </PersistentString>
+            <PersistentString
+               value = "c.color">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "ReminderDetailViewController.reloadUI() -&gt; ():ReminderDetailViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "txtViewNote.allowsEditingTextAttributes">
+            </PersistentString>
+            <PersistentString
+               value = "txtTitle.allowsEditingTextAttributes">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "HomePageTableViewController.tableView(UITableView, moveRowAtIndexPath : NSIndexPath, toIndexPath : NSIndexPath) -&gt; ():HomePageTableViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "fromIndexPath.row">
+            </PersistentString>
+            <PersistentString
+               value = "toIndexPath.row">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "AddCategoryViewController.(btnDonePerformed(AnyObject) -&gt; ()).(closure #1):AddCategoryViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.c">
+            </PersistentString>
+            <PersistentString
+               value = "self.c.color">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -19,13 +55,37 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "HomePageTableViewController.viewDidLoad() -&gt; ():HomePageTableViewController.swift">
+         contextName = "RemindersTableViewController.tableView(UITableView, cellForRowAtIndexPath : NSIndexPath) -&gt; UITableViewCell:RemindersTableViewController.swift">
          <PersistentStrings>
             <PersistentString
-               value = "c.title">
+               value = "r.due?.compare(NSDate()) == .OrderedSame">
             </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "ReminderDetailViewController.init(coder : NSCoder) -&gt; ReminderDetailViewController?:ReminderDetailViewController.swift">
+         <PersistentStrings>
             <PersistentString
-               value = "c.color">
+               value = "masterVC.view.userInteractionEnabled">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "ReminderDetailViewController.viewDidLoad() -&gt; ():ReminderDetailViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "r.due">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "ReminderDetailViewController.btnCancelPerformed(AnyObject) -&gt; ():ReminderDetailViewController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "HomePageTableViewController.tableView(UITableView, cellForRowAtIndexPath : NSIndexPath) -&gt; UITableViewCell:HomePageTableViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "categoryList[indexPath.row].color">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -38,21 +98,10 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "HomePageTableViewController.tableView(UITableView, cellForRowAtIndexPath : NSIndexPath) -&gt; UITableViewCell:HomePageTableViewController.swift">
+         contextName = "AssignLocationViewController.btnSetPerformed(UIButton!) -&gt; ():AssignLocationViewController.swift">
          <PersistentStrings>
             <PersistentString
-               value = "categoryList[indexPath.row].color">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "AddCategoryViewController.(btnDonePerformed(AnyObject) -&gt; ()).(closure #1):AddCategoryViewController.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "self.c">
-            </PersistentString>
-            <PersistentString
-               value = "self.c.color">
+               value = "sender.superview.superview">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

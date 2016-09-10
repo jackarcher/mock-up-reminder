@@ -15,6 +15,7 @@
 		CB04DEA61D780E8200D0AD0E /* fit5140assign1Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB04DEA51D780E8200D0AD0E /* fit5140assign1Tests.swift */; };
 		CB04DEB11D780E8200D0AD0E /* fit5140assign1UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB04DEB01D780E8200D0AD0E /* fit5140assign1UITests.swift */; };
 		CB04DEBF1D78113800D0AD0E /* HomePageTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB04DEBE1D78113800D0AD0E /* HomePageTableViewController.swift */; };
+		CB69548B1D81CAE00094D3A2 /* PlaceHolderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB69548A1D81CAE00094D3A2 /* PlaceHolderViewController.swift */; };
 		CB78BF291D7846790032D139 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB78BF281D7846790032D139 /* CoreData.framework */; };
 		CB78BF331D785E660032D139 /* AddCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB78BF321D785E660032D139 /* AddCategoryViewController.swift */; };
 		CB78BF361D78A8B80032D139 /* MapMasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB78BF351D78A8B80032D139 /* MapMasterViewController.swift */; };
@@ -59,6 +60,7 @@
 		CB04DEB01D780E8200D0AD0E /* fit5140assign1UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fit5140assign1UITests.swift; sourceTree = "<group>"; };
 		CB04DEB21D780E8200D0AD0E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CB04DEBE1D78113800D0AD0E /* HomePageTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomePageTableViewController.swift; sourceTree = "<group>"; };
+		CB69548A1D81CAE00094D3A2 /* PlaceHolderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceHolderViewController.swift; sourceTree = "<group>"; };
 		CB78BF281D7846790032D139 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		CB78BF321D785E660032D139 /* AddCategoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddCategoryViewController.swift; sourceTree = "<group>"; };
 		CB78BF351D78A8B80032D139 /* MapMasterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapMasterViewController.swift; sourceTree = "<group>"; };
@@ -154,12 +156,13 @@
 		CB78BF271D7842D20032D139 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				CB78BF321D785E660032D139 /* AddCategoryViewController.swift */,
-				CBEB07BA1D806DCB000BAF5F /* RemindersTableViewController.swift */,
-				CB78BF391D7980420032D139 /* AssignLocationViewController.swift */,
-				CB04DEBE1D78113800D0AD0E /* HomePageTableViewController.swift */,
 				CB78BF351D78A8B80032D139 /* MapMasterViewController.swift */,
+				CB04DEBE1D78113800D0AD0E /* HomePageTableViewController.swift */,
+				CB78BF321D785E660032D139 /* AddCategoryViewController.swift */,
+				CB78BF391D7980420032D139 /* AssignLocationViewController.swift */,
+				CBEB07BA1D806DCB000BAF5F /* RemindersTableViewController.swift */,
 				CBE557051D80BC4800F4D0F8 /* ReminderDetailViewController.swift */,
+				CB69548A1D81CAE00094D3A2 /* PlaceHolderViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -317,6 +320,7 @@
 				CB78BF361D78A8B80032D139 /* MapMasterViewController.swift in Sources */,
 				CBEB07C51D807A9E000BAF5F /* Category.swift in Sources */,
 				CBEB07BB1D806DCB000BAF5F /* RemindersTableViewController.swift in Sources */,
+				CB69548B1D81CAE00094D3A2 /* PlaceHolderViewController.swift in Sources */,
 				CB04DEBF1D78113800D0AD0E /* HomePageTableViewController.swift in Sources */,
 				CBE557061D80BC4800F4D0F8 /* ReminderDetailViewController.swift in Sources */,
 				CBEB07C41D807A9E000BAF5F /* Category+CoreDataProperties.swift in Sources */,

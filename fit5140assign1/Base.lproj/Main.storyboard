@@ -85,7 +85,7 @@
                         </connections>
                     </tableView>
                     <connections>
-                        <segue destination="blX-3x-KOz" kind="show" identifier="reminderDetail" id="YMO-BA-21i"/>
+                        <segue destination="O7a-98-j8X" kind="showDetail" identifier="reminderDetail" id="i6J-gB-bSx"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EXf-xp-Wpr" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -139,44 +139,43 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="p0s-WY-ja5">
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="p0s-WY-ja5">
                                 <rect key="frame" x="318" y="332" width="262" height="29"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="262" id="9W8-45-PQg"/>
+                                    <constraint firstAttribute="width" constant="262" id="8Ku-Tb-8rB"/>
                                 </constraints>
                                 <segments>
                                     <segment title="Enable"/>
                                     <segment title="Disable"/>
                                 </segments>
+                                <connections>
+                                    <action selector="segSwitchValueChanged:" destination="ZjU-D6-ekk" eventType="valueChanged" id="fvJ-7M-tbI"/>
+                                </connections>
                             </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="cnf-aU-JiO" firstAttribute="top" secondItem="p0s-WY-ja5" secondAttribute="bottom" constant="4" id="3QS-39-pHt"/>
-                            <constraint firstItem="Z1W-Iu-vWp" firstAttribute="trailing" secondItem="DOL-m4-nvt" secondAttribute="trailing" id="3a7-LQ-vL5"/>
-                            <constraint firstItem="I86-ZN-ggY" firstAttribute="top" secondItem="6nD-8e-HCN" secondAttribute="bottom" constant="8" symbolic="YES" id="5LN-8I-2Ub"/>
-                            <constraint firstItem="jeC-ml-qgM" firstAttribute="top" secondItem="WH0-Dt-FYW" secondAttribute="bottom" constant="8" symbolic="YES" id="5Qa-Gd-020"/>
-                            <constraint firstItem="jeC-ml-qgM" firstAttribute="leading" secondItem="cnf-aU-JiO" secondAttribute="leading" id="7ck-Kd-42j"/>
-                            <constraint firstAttribute="bottom" secondItem="cnf-aU-JiO" secondAttribute="bottom" constant="20" symbolic="YES" id="8qv-fp-eq1"/>
-                            <constraint firstItem="cnf-aU-JiO" firstAttribute="top" secondItem="jeC-ml-qgM" secondAttribute="bottom" constant="8" symbolic="YES" id="BRE-a5-0Qu"/>
-                            <constraint firstItem="I86-ZN-ggY" firstAttribute="leading" secondItem="atc-Nk-eKe" secondAttribute="leadingMargin" id="DO1-ST-Xc3"/>
-                            <constraint firstItem="DOL-m4-nvt" firstAttribute="top" secondItem="Z1W-Iu-vWp" secondAttribute="bottom" constant="8" symbolic="YES" id="DT9-lD-wnZ"/>
-                            <constraint firstItem="jeC-ml-qgM" firstAttribute="baseline" secondItem="p0s-WY-ja5" secondAttribute="baseline" id="LBK-Dw-L43"/>
-                            <constraint firstItem="jeC-ml-qgM" firstAttribute="baseline" secondItem="p0s-WY-ja5" secondAttribute="firstBaseline" id="OJm-MN-56K"/>
-                            <constraint firstItem="p0s-WY-ja5" firstAttribute="baseline" secondItem="jeC-ml-qgM" secondAttribute="firstBaseline" id="QLs-MS-XdG"/>
-                            <constraint firstItem="DOL-m4-nvt" firstAttribute="trailing" secondItem="WH0-Dt-FYW" secondAttribute="trailing" id="QtT-W6-U3D"/>
-                            <constraint firstItem="jeC-ml-qgM" firstAttribute="trailing" secondItem="cnf-aU-JiO" secondAttribute="trailing" id="UnP-eq-DNN"/>
-                            <constraint firstItem="jeC-ml-qgM" firstAttribute="centerY" secondItem="p0s-WY-ja5" secondAttribute="centerY" id="Vdk-33-ttd"/>
-                            <constraint firstItem="I86-ZN-ggY" firstAttribute="leading" secondItem="Z1W-Iu-vWp" secondAttribute="leading" id="W2k-i1-oLH"/>
-                            <constraint firstItem="p0s-WY-ja5" firstAttribute="trailing" secondItem="jeC-ml-qgM" secondAttribute="trailing" id="XbM-dK-QHj"/>
-                            <constraint firstItem="WH0-Dt-FYW" firstAttribute="top" secondItem="DOL-m4-nvt" secondAttribute="bottom" constant="8" symbolic="YES" id="XhN-Mh-sfO"/>
-                            <constraint firstItem="WH0-Dt-FYW" firstAttribute="trailing" secondItem="jeC-ml-qgM" secondAttribute="trailing" id="fwA-2R-AJk"/>
-                            <constraint firstItem="WH0-Dt-FYW" firstAttribute="leading" secondItem="jeC-ml-qgM" secondAttribute="leading" id="ibB-sO-bbE"/>
-                            <constraint firstItem="I86-ZN-ggY" firstAttribute="trailing" secondItem="Z1W-Iu-vWp" secondAttribute="trailing" id="ird-yH-zaI"/>
-                            <constraint firstItem="I86-ZN-ggY" firstAttribute="trailing" secondItem="atc-Nk-eKe" secondAttribute="trailingMargin" id="kHN-XX-MTE"/>
-                            <constraint firstItem="DOL-m4-nvt" firstAttribute="leading" secondItem="WH0-Dt-FYW" secondAttribute="leading" id="tBN-Va-37R"/>
-                            <constraint firstItem="Z1W-Iu-vWp" firstAttribute="top" secondItem="I86-ZN-ggY" secondAttribute="bottom" constant="8" symbolic="YES" id="vLv-v7-c30"/>
-                            <constraint firstItem="Z1W-Iu-vWp" firstAttribute="leading" secondItem="DOL-m4-nvt" secondAttribute="leading" id="zAU-G8-ckv"/>
+                            <constraint firstItem="Z1W-Iu-vWp" firstAttribute="top" secondItem="I86-ZN-ggY" secondAttribute="bottom" constant="8" symbolic="YES" id="3V1-DS-uMV"/>
+                            <constraint firstItem="I86-ZN-ggY" firstAttribute="leading" secondItem="atc-Nk-eKe" secondAttribute="leadingMargin" id="47a-Wt-9Ty"/>
+                            <constraint firstItem="DOL-m4-nvt" firstAttribute="trailing" secondItem="WH0-Dt-FYW" secondAttribute="trailing" id="BQT-N9-SQo"/>
+                            <constraint firstItem="WH0-Dt-FYW" firstAttribute="trailing" secondItem="jeC-ml-qgM" secondAttribute="trailing" id="GCw-4m-mHE"/>
+                            <constraint firstItem="DOL-m4-nvt" firstAttribute="leading" secondItem="WH0-Dt-FYW" secondAttribute="leading" id="GzH-1N-mGn"/>
+                            <constraint firstItem="jeC-ml-qgM" firstAttribute="leading" secondItem="cnf-aU-JiO" secondAttribute="leading" id="NJa-h8-fyq"/>
+                            <constraint firstItem="I86-ZN-ggY" firstAttribute="leading" secondItem="Z1W-Iu-vWp" secondAttribute="leading" id="NOb-i7-kYj"/>
+                            <constraint firstItem="cnf-aU-JiO" firstAttribute="top" secondItem="jeC-ml-qgM" secondAttribute="bottom" constant="8" symbolic="YES" id="OVp-Yj-kOs"/>
+                            <constraint firstItem="Z1W-Iu-vWp" firstAttribute="leading" secondItem="DOL-m4-nvt" secondAttribute="leading" id="PBQ-Os-lqH"/>
+                            <constraint firstAttribute="bottom" secondItem="cnf-aU-JiO" secondAttribute="bottom" constant="20" symbolic="YES" id="Rgy-V6-zh2"/>
+                            <constraint firstItem="I86-ZN-ggY" firstAttribute="trailing" secondItem="atc-Nk-eKe" secondAttribute="trailingMargin" id="f8l-LZ-iXP"/>
+                            <constraint firstItem="I86-ZN-ggY" firstAttribute="top" secondItem="6nD-8e-HCN" secondAttribute="bottom" constant="8" symbolic="YES" id="iEk-lG-4tF"/>
+                            <constraint firstItem="p0s-WY-ja5" firstAttribute="trailing" secondItem="jeC-ml-qgM" secondAttribute="trailing" id="qgU-F0-Jva"/>
+                            <constraint firstItem="jeC-ml-qgM" firstAttribute="trailing" secondItem="cnf-aU-JiO" secondAttribute="trailing" id="t15-96-1oK"/>
+                            <constraint firstItem="I86-ZN-ggY" firstAttribute="trailing" secondItem="Z1W-Iu-vWp" secondAttribute="trailing" id="tNf-pS-ra5"/>
+                            <constraint firstItem="jeC-ml-qgM" firstAttribute="top" secondItem="WH0-Dt-FYW" secondAttribute="bottom" constant="8" symbolic="YES" id="vcK-VA-0Ps"/>
+                            <constraint firstItem="WH0-Dt-FYW" firstAttribute="leading" secondItem="jeC-ml-qgM" secondAttribute="leading" id="wfe-EZ-cxD"/>
+                            <constraint firstItem="DOL-m4-nvt" firstAttribute="top" secondItem="Z1W-Iu-vWp" secondAttribute="bottom" constant="8" symbolic="YES" id="xWa-nN-T6R"/>
+                            <constraint firstItem="p0s-WY-ja5" firstAttribute="baseline" secondItem="jeC-ml-qgM" secondAttribute="firstBaseline" id="yKo-1F-NMw"/>
+                            <constraint firstItem="WH0-Dt-FYW" firstAttribute="top" secondItem="DOL-m4-nvt" secondAttribute="bottom" constant="8" symbolic="YES" id="ylq-wU-4oE"/>
+                            <constraint firstItem="Z1W-Iu-vWp" firstAttribute="trailing" secondItem="DOL-m4-nvt" secondAttribute="trailing" id="zef-BF-Q5o"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Reminder Detail" id="SCR-rO-79x"/>
@@ -189,7 +188,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1Jf-PX-ZPX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2726" y="2203"/>
+            <point key="canvasLocation" x="2011" y="2323"/>
         </scene>
         <!--Reminders-->
         <scene sceneID="ZUf-xg-22R">
@@ -198,12 +197,12 @@
                     <tabBarItem key="tabBarItem" title="Reminders" image="checklist" id="brW-cf-R8k"/>
                     <connections>
                         <segue destination="3IB-vO-q9P" kind="relationship" relationship="masterViewController" id="4Xm-yN-YqI"/>
-                        <segue destination="blX-3x-KOz" kind="relationship" relationship="detailViewController" id="GBb-Ga-kOM"/>
+                        <segue destination="O7a-98-j8X" kind="relationship" relationship="detailViewController" id="GBb-Ga-kOM"/>
                     </connections>
                 </splitViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ibd-cl-92J" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-354" y="2203"/>
+            <point key="canvasLocation" x="-410" y="2811"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="1LP-aU-B8u">
@@ -372,6 +371,7 @@
                     </navigationItem>
                     <connections>
                         <segue destination="T35-pX-gUf" kind="showDetail" identifier="showReminders" action="showViewController:sender:" id="Kd0-ky-f46"/>
+                        <segue destination="O7a-98-j8X" kind="showDetail" identifier="afterDeleteCategory" id="wCV-Hw-QcV"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="J5q-Yc-QNp" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -479,10 +479,11 @@
             </objects>
             <point key="canvasLocation" x="2726" y="690"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--create/update-->
         <scene sceneID="5Xq-ON-aBA">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="blX-3x-KOz" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="create/update" id="kuK-gs-uaa"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="BCF-Yg-Sg6">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -495,7 +496,79 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="az7-2J-aOn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2011" y="2203"/>
+            <point key="canvasLocation" x="1223" y="2323"/>
+        </scene>
+        <!--Reminder Detial-->
+        <scene sceneID="WgF-Fz-BXZ">
+            <objects>
+                <viewController id="Wfk-sc-hSQ" customClass="PlaceHolderViewController" customModule="fit5140assign1" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ycy-lN-7XA"/>
+                        <viewControllerLayoutGuide type="bottom" id="biS-3m-TEN"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="YGX-4l-xdH">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="please select reminder by Category -&gt; Reminder On the left-hand side" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OvD-Wq-owP">
+                                <rect key="frame" x="202" y="246" width="197" height="107"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="107" id="fWJ-gR-Nfz"/>
+                                    <constraint firstAttribute="width" constant="197" id="oAX-xX-1lI"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="OvD-Wq-owP" firstAttribute="centerX" secondItem="YGX-4l-xdH" secondAttribute="centerX" id="9PW-VM-65t"/>
+                            <constraint firstItem="OvD-Wq-owP" firstAttribute="centerY" secondItem="YGX-4l-xdH" secondAttribute="centerY" id="foH-Ek-wz3"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Reminder Detial" id="q6P-Lo-RB0"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="u2H-zy-kTd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2035" y="3095"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="nfO-yZ-ak9">
+            <objects>
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="O7a-98-j8X" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="kRl-1z-WQZ">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="gFZ-lY-KFj" kind="relationship" relationship="viewControllers" id="jS2-84-F6k"/>
+                        <segue destination="blX-3x-KOz" kind="relationship" relationship="viewControllers" id="PFE-3R-8Yy"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oj9-1J-iqW" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="411" y="2811"/>
+        </scene>
+        <!--hint-->
+        <scene sceneID="mwU-Ac-l2q">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="gFZ-lY-KFj" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="hint" id="Rxa-Se-01b"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="WkP-14-kSD">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Wfk-sc-hSQ" kind="relationship" relationship="rootViewController" id="JqN-LO-Xm8"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Mfv-f0-qLp" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1223" y="3095"/>
         </scene>
     </scenes>
     <resources>
@@ -504,7 +577,7 @@
         <image name="map_icon" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="ROr-cA-aKB"/>
-        <segue reference="YMO-BA-21i"/>
+        <segue reference="wCV-Hw-QcV"/>
+        <segue reference="Kd0-ky-f46"/>
     </inferredMetricsTieBreakers>
 </document>
