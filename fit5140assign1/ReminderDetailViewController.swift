@@ -67,6 +67,12 @@ class ReminderDetailViewController: UIViewController, UITextFieldDelegate, UITex
         reloadUI()
     }
 
+    // might move some reloadui to here 
+    // todo
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    
     // reload the UI, used for cancel btn
     func reloadUI(){
         // message to show the function of this VC, which indicates the current use of this VC (to check reminder/ to update reminder / to create reminder)

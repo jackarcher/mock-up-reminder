@@ -10,9 +10,11 @@ import UIKit
 import CoreData
 import MapKit
 
-protocol HomePageDelegate {
-    func addCategory(c:Category)
-    func refreshUpdate()
+protocol AddCategoryDelegate {
+    func setLocation(location: CLLocationCoordinate2D)
+    func getLoacation() -> MKAnnotation?
+    func setRadius(r:Int)
+    func getRadius() -> Int
 }
 
 class AddCategoryViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, AddCategoryDelegate, UITextFieldDelegate {
@@ -32,7 +34,7 @@ class AddCategoryViewController: UIViewController, UIPickerViewDelegate, UIPicke
     // color data source
     let colours = ["Black(default)","Orange","Blue","Green"]
     // location data sorece
-    var selectedLocation: MKAnnotation?
+    var selectedLocation: MKPointAnnotation?
     // selected notification radius index
     var selectedRadius:Int = 0
     // current category
@@ -45,6 +47,11 @@ class AddCategoryViewController: UIViewController, UIPickerViewDelegate, UIPicke
         // Do any additional setup after loading the view.
         segSwitch.selectedSegmentIndex = 1
         self.container.alpha = 0
+        
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         var msg: String?
         if !isEditCategory {
             self.c = Category.init(entity: NSEntityDescription.entityForName("Category", inManagedObjectContext: self.managedObjectContext )!,insertIntoManagedObjectContext: self.managedObjectContext)
@@ -53,24 +60,31 @@ class AddCategoryViewController: UIViewController, UIPickerViewDelegate, UIPicke
             msg = "Update"
             txtTitle.text = c.title
             let colorDic = ["Black(default)":0,"Orange":1,"Blue":2,"Green":3]
-            self.colorPicker.selectRow(colorDic[self.c.color!]!, inComponent: 0, animated: true)
+            self.selectedColour = colorDic[self.c.color!]!
+            self.colorPicker.selectRow(self.selectedColour, inComponent: 0, animated: true)
             if self.c.latitude == nil {
-                segSwitch.selectedSegmentIndex = 0
-                self.container.alpha = 1
-            } else {
                 segSwitch.selectedSegmentIndex = 1
                 self.container.alpha = 0
+            } else {
+                segSwitch.selectedSegmentIndex = 0
+                self.container.alpha = 1
+                // todo set annotation for map
+                selectedLocation = MKPointAnnotation()
+                selectedLocation?.title = c.title
+                selectedLocation?.coordinate = CLLocationCoordinate2D(latitude: (c.latitude?.doubleValue)!, longitude: (c.longitude?.doubleValue)!)
+                selectedRadius = (c.radius?.integerValue)!
+
             }
-            // todo set annotation for map
+            
         }
         self.navigationItem.rightBarButtonItems = []
         let btnFinish = UIBarButtonItem(title: msg, style: .Done, target: self, action: #selector(btnFinishPerformed(_:)))
         self.navigationItem.title = "\(msg!) Category"
         self.navigationItem.rightBarButtonItems?.append(btnFinish)
-    
+        
         txtTitle.delegate = self
         txtTitle.returnKeyType = .Done
-        
+
     }
 
     @IBAction func SegSwiched(sender: UISegmentedControl) {
@@ -109,8 +123,7 @@ class AddCategoryViewController: UIViewController, UIPickerViewDelegate, UIPicke
             let alert = UIAlertController(title: "Validation fail", message: "Please set the location by tap the annotaion of selected location", preferredStyle: .Alert)
             alert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: nil))
             self.presentViewController(alert, animated: true, completion: nil)
-        }
-        else {
+        } else {
             view.endEditing(true)
             dismissViewControllerAnimated(true, completion: {
                 // send the data back to homepage.
@@ -122,8 +135,12 @@ class AddCategoryViewController: UIViewController, UIPickerViewDelegate, UIPicke
                     let longi = self.selectedLocation?.coordinate.longitude
                     self.c.setValue(lati, forKey: "latitude")
                     self.c.setValue(longi, forKey: "longitude")
+                    self.c.setValue(self.selectedRadius, forKey: "radius")
+                } else if self.segSwitch.selectedSegmentIndex == 1 {
+                    self.c.setValue(nil, forKey: "latitude")
+                    self.c.setValue(nil, forKey: "longitude")
+                    self.c.setValue(0, forKey: "radius")
                 }
-                self.setValue(self.selectedRadius, forKey: "radius")
                 self.homePageDelegate?.refreshUpdate()
                 if !self.isEditCategory{
                     self.homePageDelegate!.addCategory(self.c)
@@ -148,6 +165,8 @@ class AddCategoryViewController: UIViewController, UIPickerViewDelegate, UIPicke
         selectedColour = row
     }
     
+    
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "toMAP"{
             let target = segue.destinationViewController as! AssignLocationViewController
@@ -158,13 +177,25 @@ class AddCategoryViewController: UIViewController, UIPickerViewDelegate, UIPicke
         }
     }
     
-    func setLocation(location: MKAnnotation) {
-        self.selectedLocation = location
+    func setLocation(location: CLLocationCoordinate2D) {
+        print(location)
+        if selectedLocation == nil{
+            selectedLocation = MKPointAnnotation()
+        }
+        self.selectedLocation!.coordinate = location
     }
+    
+    func getLoacation() -> MKAnnotation?{
+        return selectedLocation
+    }
+    
     func setRadius(r: Int) {
         self.selectedRadius = r
     }
     
+    func getRadius() -> Int {
+        return self.selectedRadius
+    }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         view.endEditing(true)

@@ -8,8 +8,9 @@
 
 import UIKit
 import CoreData
+import MapKit
 
-class RemindersTableViewController: UITableViewController, RemindersTableViewDelegate {
+class RemindersTableViewController: UITableViewController, RemindersTableViewDelegate, CLLocationManagerDelegate {
 
     var reminderList: NSMutableArray = NSMutableArray()
     
@@ -19,6 +20,18 @@ class RemindersTableViewController: UITableViewController, RemindersTableViewDel
     
     var btnEdit:UIBarButtonItem!
     
+    // refer:http://stackoverflow.com/questions/28959201/create-local-location-based-notifications-in-swift
+    let notification = UILocalNotification()
+    
+    let locationManager = CLLocationManager()
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        
+        locationManager.delegate = self
+        locationManager.requestAlwaysAuthorization()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -26,7 +39,8 @@ class RemindersTableViewController: UITableViewController, RemindersTableViewDel
         
         // Uncomment the following line to preserve selection between presentations
          self.clearsSelectionOnViewWillAppear = false
-
+        
+        self.navigationItem.title = "Reminder List"
         self.navigationItem.rightBarButtonItems = []
         self.navigationItem.rightBarButtonItems?.append(UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(btnAddPerformed)))
         // edit button
@@ -37,8 +51,45 @@ class RemindersTableViewController: UITableViewController, RemindersTableViewDel
         tableView.allowsSelectionDuringEditing = true
         
         tableView.tableFooterView = UIView()
-        sort()
+        
+        if c?.latitude != nil {
+            notification.regionTriggersOnce = false
+            notification.region = CLCircularRegion(center: CLLocationCoordinate2D(latitude: (c?.latitude!.doubleValue)!, longitude: (c?.longitude?.doubleValue)!), radius: radiusDic[(c?.radius?.integerValue)!]!, identifier: (c?.title)!)
+        }
+
     }
+    
+    func locationManager(manager: CLLocationManager, didEnterRegion region: CLRegion) {
+        if c?.radius?.intValue != 0{
+            notification.alertTitle = "Enter location"
+            notification.alertBody = "You've entered the location of your reminder"
+        }
+        
+        UIApplication.sharedApplication().cancelAllLocalNotifications()
+        UIApplication.sharedApplication().scheduledLocalNotifications?.append(notification)
+    }
+    
+    func locationManager(manager: CLLocationManager, didExitRegion region: CLRegion) {
+        if c?.radius?.intValue != 0{
+            notification.alertTitle = "Leave location"
+            for r in reminderList {
+                let r = r as! Reminder
+                if !r.isDone {
+                    notification.alertBody = "You've Leave the location of your reminder, without finishing everything"
+                    break
+                }
+            }
+        }
+        
+        UIApplication.sharedApplication().cancelAllLocalNotifications()
+        UIApplication.sharedApplication().scheduledLocalNotifications?.append(notification)
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        sort()
+        tableView.reloadData()
+    }
+
 
     func sort(){
         reminderList.sortUsingComparator({
@@ -156,9 +207,9 @@ class RemindersTableViewController: UITableViewController, RemindersTableViewDel
                     } else {
                         target.isEditReminder = nil
                     }
+                } else if (sender as! String) == "popup"{
+                        tab.selectedIndex = 0
                 }
-            } else {
-                tab.selectedIndex = 0
             }
         }
     }
@@ -209,6 +260,4 @@ class RemindersTableViewController: UITableViewController, RemindersTableViewDel
         }
         
     }
-
-    
 }

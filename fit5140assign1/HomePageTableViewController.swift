@@ -8,7 +8,13 @@
 
 import UIKit
 import CoreData
-import MapKit//?
+import MapKit
+
+protocol HomePageDelegate {
+    func addCategory(c:Category)
+    func refreshUpdate()
+    func getCatories() -> [Category]!
+}
 
 class HomePageTableViewController: UITableViewController ,HomePageDelegate {
 
@@ -17,6 +23,10 @@ class HomePageTableViewController: UITableViewController ,HomePageDelegate {
     
     // the array stored the categories list
     var categoryList: [Category]!
+    
+    // map master delegate
+    var mapMasterDelegate:MapMasterDelegate?
+    
     
     required init?(coder aDecoder: NSCoder) {
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
@@ -62,9 +72,23 @@ class HomePageTableViewController: UITableViewController ,HomePageDelegate {
         tableView.allowsSelectionDuringEditing = true
         
         // Uncomment the following line to preserve selection between presentations
-         self.clearsSelectionOnViewWillAppear = false
+        self.clearsSelectionOnViewWillAppear = false
+
     }
 
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
+        if mapMasterDelegate != nil{
+            mapMasterDelegate!.reloadMap(self.categoryList)
+            print("Map Master Page Reload")
+        } else {
+            print("delegate to be set")
+        }
+        
+
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -87,25 +111,8 @@ class HomePageTableViewController: UITableViewController ,HomePageDelegate {
         let cell = tableView.dequeueReusableCellWithIdentifier("category", forIndexPath: indexPath)
 
         // Configure the cell...
-
-        cell.textLabel?.text = self.categoryList[indexPath.row].title
-        switch categoryList[indexPath.row].color! {
-        case "Black(default)" :
-            cell.textLabel?.textColor = UIColor.blackColor()
-            break
-        case "Orange" :
-            cell.textLabel?.textColor = UIColor.orangeColor()
-            break
-        case "Blue" :
-            cell.textLabel?.textColor = UIColor.blueColor()
-            break
-        case "Green" :
-            cell.textLabel?.textColor = UIColor.greenColor()
-            break
-        default:
-            cell.textLabel?.textColor = UIColor.blueColor()
-            break
-        }
+        cell.textLabel?.text = categoryList[indexPath.row].title
+        cell.textLabel?.textColor = colorDic[categoryList[indexPath.row].color!]
         return cell
     }
  
@@ -186,11 +193,7 @@ class HomePageTableViewController: UITableViewController ,HomePageDelegate {
                 return Int(c1.order!)<Int(c2.order!)
             })
         }
-        
-        // debug
-        for c in categoryList{
-            print("\(c.order!):\(c.title!)")
-        }
+        performSegueWithIdentifier("afterDeleteCategory", sender: nil)
     }
  
 
@@ -218,6 +221,7 @@ class HomePageTableViewController: UITableViewController ,HomePageDelegate {
     }
     
     func refreshUpdate() {
+        print(categoryList.first)
         do{
             try self.managedObjectContext.save()
             print("Update commited")
@@ -225,6 +229,11 @@ class HomePageTableViewController: UITableViewController ,HomePageDelegate {
             print("Save Error while Insert: \n\(error)")
         }
         tableView.reloadData()
+    }
+    
+    
+    func getCatories() -> [Category]!{
+        return self.categoryList
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

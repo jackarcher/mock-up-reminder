@@ -9,11 +9,6 @@
 import UIKit
 import MapKit
 
-protocol AddCategoryDelegate {
-    func setLocation(location: MKAnnotation)
-    func setRadius(r:Int)
-}
-
 class AssignLocationViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UISearchBarDelegate {
 
     @IBOutlet weak var srchAddress: UISearchBar!
@@ -26,8 +21,9 @@ class AssignLocationViewController: UIViewController, MKMapViewDelegate, CLLocat
     
     var srchResult:[MKPlacemark]! = []
     
-    
     let locationManager: CLLocationManager  = CLLocationManager()
+    
+    var updateLocation: MKAnnotation?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,31 +33,55 @@ class AssignLocationViewController: UIViewController, MKMapViewDelegate, CLLocat
         map.delegate = self
         
         // set up map
-        map.userTrackingMode = .Follow
-        map.showsUserLocation = true
+        map.showsUserLocation = false
         
         // set up location manager
-        // todo region
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        
     }
 
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        updateLocation = addCategoryDelegate?.getLoacation()
+        if updateLocation != nil && updateLocation!.coordinate.latitude != 0 {
+            map.addAnnotation(updateLocation!)
+            map.setRegion(MKCoordinateRegionMakeWithDistance(updateLocation!.coordinate, 5000.0, 5000.0), animated: true)
+        }
+        
+        map.removeOverlays(map.overlays)
+        for a in map.annotations
+        {
+            if a is MKUserLocation { continue }
+
+            let r = radiusDic[(addCategoryDelegate?.getRadius())!]!
+            if r != 0{
+                let circle = MKCircle(centerCoordinate: a.coordinate, radius: r)
+                map.addOverlay(circle)
+            }
+            
+        }
+        segRadius.selectedSegmentIndex = (addCategoryDelegate?.getRadius())!
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
-        if searchBar.text == nil || (searchBar.text?.isEmpty)!{
-            let msg = "Please input your message"
-            let alert = UIAlertController(title: "Error", message: msg, preferredStyle: .Alert)
-            alert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: nil))
-            self.presentViewController(alert, animated: true, completion: nil)
-        } else{
-            view.endEditing(true)
-            search(searchBar.text)
-        }
+        view.endEditing(true)
+        search(searchBar.text)
+    }
+    
+    func mapView(mapView: MKMapView, rendererForOverlay overlay: MKOverlay) -> MKOverlayRenderer {
+        let c = overlay as! MKCircle
+        let cRender = MKCircleRenderer(circle: c)
+        cRender.fillColor = UIColor.redColor()
+        cRender.alpha = 0.15
+        return cRender
     }
     
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
@@ -100,7 +120,7 @@ class AssignLocationViewController: UIViewController, MKMapViewDelegate, CLLocat
 
         let alert = UIAlertController(title: "Info", message: "Set this location for category?", preferredStyle: .Alert)
         alert.addAction(UIAlertAction(title: "Set", style: .Default, handler: {(alert: UIAlertAction!) in
-            self.addCategoryDelegate?.setLocation(view.annotation!)
+            self.addCategoryDelegate?.setLocation(view.annotation!.coordinate)
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
         self.presentViewController(alert, animated: true, completion: nil)
@@ -133,22 +153,13 @@ class AssignLocationViewController: UIViewController, MKMapViewDelegate, CLLocat
                     self.srchResult.append(mkp)
                 }
                 // move screen center
-                self.map.setCenterCoordinate((self.srchResult!.first?.coordinate)!, animated: true)
+                self.map.setRegion(MKCoordinateRegionMakeWithDistance((self.srchResult!.first?.coordinate)!, 5000.0, 5000.0), animated: true)
             }
         })
     }
 
     @IBAction func segRadiusValueChanged(sender: UISegmentedControl) {
-        addCategoryDelegate?.setRadius(self.segRadius.selectedSegmentIndex)
+        addCategoryDelegate?.setRadius(self.segRadius.selectedSegmentIndex) 
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
