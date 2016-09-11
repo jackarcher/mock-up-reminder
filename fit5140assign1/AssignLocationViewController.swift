@@ -9,6 +9,7 @@
 import UIKit
 import MapKit
 
+// class manage the assign location container.
 class AssignLocationViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UISearchBarDelegate {
 
     @IBOutlet weak var srchAddress: UISearchBar!
@@ -17,18 +18,23 @@ class AssignLocationViewController: UIViewController, MKMapViewDelegate, CLLocat
     
     @IBOutlet weak var segRadius: UISegmentedControl!
     
+    // the parent view controller delegate
     var addCategoryDelegate:AddCategoryDelegate?
     
+    // search result for given address, coulde be []
     var srchResult:[MKPlacemark]! = []
     
+    // the location manager for location-based
     let locationManager: CLLocationManager  = CLLocationManager()
     
+    // the location set by user (for update use), if the user enable the locaiton based service
     var updateLocation: MKAnnotation?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        // initialize the 3 delegates, programmly
+        
+        // initialize the 2 delegates, programmly
         srchAddress.delegate = self
         map.delegate = self
         
@@ -158,6 +164,7 @@ class AssignLocationViewController: UIViewController, MKMapViewDelegate, CLLocat
         })
     }
 
+    // when people change the radius
     @IBAction func segRadiusValueChanged(sender: UISegmentedControl) {
         addCategoryDelegate?.setRadius(self.segRadius.selectedSegmentIndex) 
     }

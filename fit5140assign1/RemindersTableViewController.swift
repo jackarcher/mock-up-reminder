@@ -12,12 +12,15 @@ import MapKit
 
 class RemindersTableViewController: UITableViewController, RemindersTableViewDelegate, CLLocationManagerDelegate {
 
+    // list of reminders for current category
     var reminderList: NSMutableArray = NSMutableArray()
     
     var managedObjectContext: NSManagedObjectContext?
     
+    // current category
     var c:Category?
     
+    // the edit button for the view
     var btnEdit:UIBarButtonItem!
     
     // refer:http://stackoverflow.com/questions/28959201/create-local-location-based-notifications-in-swift
@@ -38,11 +41,13 @@ class RemindersTableViewController: UITableViewController, RemindersTableViewDel
         self.reminderList = NSMutableArray(array: (c?.from_re?.allObjects)!)
         
         // Uncomment the following line to preserve selection between presentations
-         self.clearsSelectionOnViewWillAppear = false
+        self.clearsSelectionOnViewWillAppear = false
         
+        // set some extra UI info
         self.navigationItem.title = "Reminder List"
         self.navigationItem.rightBarButtonItems = []
         self.navigationItem.rightBarButtonItems?.append(UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(btnAddPerformed)))
+        
         // edit button
         btnEdit = self.editButtonItem()
         self.navigationItem.rightBarButtonItems?.append(btnEdit)
@@ -52,6 +57,7 @@ class RemindersTableViewController: UITableViewController, RemindersTableViewDel
         
         tableView.tableFooterView = UIView()
         
+        // location based service disabled
         if c?.latitude != nil {
             notification.regionTriggersOnce = false
             notification.region = CLCircularRegion(center: CLLocationCoordinate2D(latitude: (c?.latitude!.doubleValue)!, longitude: (c?.longitude?.doubleValue)!), radius: radiusDic[(c?.radius?.integerValue)!]!, identifier: (c?.title)!)
@@ -90,6 +96,7 @@ class RemindersTableViewController: UITableViewController, RemindersTableViewDel
         tableView.reloadData()
     }
 
+    // sort the list by given specifications in assignment
 
     func sort(){
         reminderList.sortUsingComparator({
@@ -214,6 +221,7 @@ class RemindersTableViewController: UITableViewController, RemindersTableViewDel
         }
     }
     
+    // btn add pressed, call segue and lead to other VC
     func btnAddPerformed(){
         performSegueWithIdentifier("reminderDetail", sender: UIBarButtonItem())
     }

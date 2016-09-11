@@ -10,12 +10,17 @@ import UIKit
 import CoreData
 import MapKit
 
+// delegate the homepage
 protocol HomePageDelegate {
+    // to add the category back to homepage
     func addCategory(c:Category)
+    // settle down everything, including reload ui after update
     func refreshUpdate()
+    // get the current catogories list
     func getCatories() -> [Category]!
 }
 
+//
 class HomePageTableViewController: UITableViewController ,HomePageDelegate {
 
     // core data need this
@@ -26,7 +31,6 @@ class HomePageTableViewController: UITableViewController ,HomePageDelegate {
     
     // map master delegate
     var mapMasterDelegate:MapMasterDelegate?
-    
     
     required init?(coder aDecoder: NSCoder) {
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
@@ -44,6 +48,7 @@ class HomePageTableViewController: UITableViewController ,HomePageDelegate {
         let entityDescription = NSEntityDescription.entityForName("Category", inManagedObjectContext: self.managedObjectContext)
         fetchRequest.entity = entityDescription
         
+        // set the result to local variable: catoriesList
         var result = NSArray?()
         do {
             result = try self.managedObjectContext.executeFetchRequest(fetchRequest)
@@ -60,6 +65,7 @@ class HomePageTableViewController: UITableViewController ,HomePageDelegate {
             print(fetchError)
         }
         
+        // sort the result by last time user-defined order
         categoryList.sortInPlace({
         c1, c2 in
             return Int(c1.order!)<Int(c2.order!)
@@ -79,6 +85,7 @@ class HomePageTableViewController: UITableViewController ,HomePageDelegate {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         tableView.reloadData()
+        // set the delegate, so that we can sync the result when used in different tab
         if mapMasterDelegate != nil{
             mapMasterDelegate!.reloadMap(self.categoryList)
             print("Map Master Page Reload")

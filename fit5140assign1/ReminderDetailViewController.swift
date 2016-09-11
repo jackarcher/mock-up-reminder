@@ -9,13 +9,19 @@
 import UIKit
 import CoreData
 
+// the delegate for remindertableview
 protocol RemindersTableViewDelegate {
+    // add new reminder to the table view and reload UI
     func addReminder(r:Reminder)
+    // update coredata and reload UI
     func udpdateReminder()
+    // cancel edit if we were in edit mode, to the reminder table view, which is the master
     func cancelEdit()
+    // display the place holder page for detail view in splite, to prevent user from interaction concurrently with the master view and the detail veiw in splite
     func displayHome()
 }
 
+// to create, or update, or check the reminder detail
 class ReminderDetailViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate{
 
     @IBOutlet weak var txtTitle: UITextField!
@@ -27,9 +33,16 @@ class ReminderDetailViewController: UIViewController, UITextFieldDelegate, UITex
     
     var remindersTableViewDelegate: RemindersTableViewDelegate?
     
+    // indicate the situation of this vc
+    // true     <==> user is edit an exsiting reminder, interaction to master view disabled in this mode.
+    // false    <==> user is createing an new reminder, interaction to master view disabled in this mode.
+    // nil      <==> user is check an existing new reminder, interaction to detail view disabled in this mode.
     var isEditReminder:Bool?
+    
+    // the current reminder
     var r:Reminder!
 
+    // the maste view controller
     var masterVC: UIViewController!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,6 +60,8 @@ class ReminderDetailViewController: UIViewController, UITextFieldDelegate, UITex
         // add cancel button to left-top corner
         let btnCancel = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: #selector(btnCancelPerformed(_:)))
         self.navigationItem.leftBarButtonItems?.append(btnCancel)
+        // txtfield relavent
+        txtTitle.delegate = self
         // txtview relavent
         txtViewNote.delegate = self
         // show border
@@ -73,7 +88,8 @@ class ReminderDetailViewController: UIViewController, UITextFieldDelegate, UITex
         super.viewWillAppear(animated)
     }
     
-    // reload the UI, used for cancel btn
+    // set the ui to refer the current situation of reminder within DB.
+    // this method will init for 3 different mode mentioned above
     func reloadUI(){
         // message to show the function of this VC, which indicates the current use of this VC (to check reminder/ to update reminder / to create reminder)
         var msg: String?
@@ -147,6 +163,7 @@ class ReminderDetailViewController: UIViewController, UITextFieldDelegate, UITex
             })
         }
         
+        // common UI settings
         self.navigationItem.rightBarButtonItems = []
         let btnFinish:UIBarButtonItem = UIBarButtonItem(title: msg, style: .Done, target: self, action: #selector(btnFinishPerformed(_:)))
         if msg == "Uncheck"{
@@ -161,6 +178,7 @@ class ReminderDetailViewController: UIViewController, UITextFieldDelegate, UITex
         txtTitle.returnKeyType = .Done
     }
     
+    // set for display/hide date picker regard the user selection
     @IBAction func segSwitchValueChanged(sender: AnyObject) {
         if segSwitch.selectedSegmentIndex == 1{
             UIView.animateWithDuration(0.5, animations: {
@@ -173,7 +191,8 @@ class ReminderDetailViewController: UIViewController, UITextFieldDelegate, UITex
         }
     }
     
-    
+    // user finish his work, I first validate everything, then check the current mode of this VC
+    // then I do different process respectively
     func btnFinishPerformed(sender: AnyObject) {
         // validation
         if self.txtTitle.text == nil || (self.txtTitle.text?.isEmpty)!{
@@ -212,6 +231,7 @@ class ReminderDetailViewController: UIViewController, UITextFieldDelegate, UITex
         }
     }
     
+    // similar to finish button, but no need for precess data, we just set the mode back to check
     func btnCancelPerformed(sender: AnyObject){
         view.endEditing(true)
         if isEditReminder == nil{
@@ -235,5 +255,16 @@ class ReminderDetailViewController: UIViewController, UITextFieldDelegate, UITex
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        view.endEditing(true)
+        return true
+    }
+    
+    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+        if text == "\n" {
+            view.endEditing(true)
+        }
+        return true
+    }
 }

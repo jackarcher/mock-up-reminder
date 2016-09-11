@@ -9,9 +9,11 @@
 import UIKit
 import MapKit
 
+// just add a var to mkpointannotation, to also store the category for this annotation
 class myPinAnnotation: MKPointAnnotation {
+    // the category for this annotation
     var c:Category!
-    
+    // add init
     init(c:Category!) {
         super.init()
         self.c = c

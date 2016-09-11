@@ -61,6 +61,7 @@ class MapMasterViewController: UIViewController, CLLocationManagerDelegate, MKMa
     }
     
     override func viewWillAppear(animated: Bool) {
+        // set all annotations except current location circles, if they have notification radius
         map.removeOverlays(map.overlays)
         for a in map.annotations
         {
@@ -76,17 +77,20 @@ class MapMasterViewController: UIViewController, CLLocationManagerDelegate, MKMa
             
         }
     }
-    
+
     func mapView(mapView: MKMapView, didUpdateUserLocation userLocation: MKUserLocation) {
+        // concol check if the device'g gps is working
         print(userLocation.coordinate)
     }
     
 
+    // centerMap to a given location  @location is
     func centerMapOnLocation(location: CLLocation) {
         let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate, regionRadius * 5.0, regionRadius * 5.0)
         map.setRegion(coordinateRegion, animated: true)
     }
     
+    // relaod the map after new search
     func reloadMap(categories:[Category]!) {
         map.removeAnnotations(map.annotations)
         for c in categories {

@@ -10,10 +10,15 @@ import UIKit
 import CoreData
 import MapKit
 
+// add category delegate, for using a container to manage the location based serview option in add/ update category
 protocol AddCategoryDelegate {
+    // set selected location
     func setLocation(location: CLLocationCoordinate2D)
+    // get the selected location, for init update status
     func getLoacation() -> MKAnnotation?
+    // set selected radius
     func setRadius(r:Int)
+    // get the selected radius, for init update status
     func getRadius() -> Int
 }
 
@@ -54,9 +59,11 @@ class AddCategoryViewController: UIViewController, UIPickerViewDelegate, UIPicke
         super.viewWillAppear(animated)
         var msg: String?
         if !isEditCategory {
+            // if we are create new category, we init a category object
             self.c = Category.init(entity: NSEntityDescription.entityForName("Category", inManagedObjectContext: self.managedObjectContext )!,insertIntoManagedObjectContext: self.managedObjectContext)
             msg = "Create"
         } else {
+            // if we are updateing an existing category, we set the ui to all existing info
             msg = "Update"
             txtTitle.text = c.title
             let colorDic = ["Black(default)":0,"Orange":1,"Blue":2,"Green":3]
@@ -77,16 +84,19 @@ class AddCategoryViewController: UIViewController, UIPickerViewDelegate, UIPicke
             }
             
         }
+        // update the ui, like table and button title, to the situation set above.
         self.navigationItem.rightBarButtonItems = []
         let btnFinish = UIBarButtonItem(title: msg, style: .Done, target: self, action: #selector(btnFinishPerformed(_:)))
         self.navigationItem.title = "\(msg!) Category"
         self.navigationItem.rightBarButtonItems?.append(btnFinish)
         
+        // txtTitle options, set delegate and change keyboard
         txtTitle.delegate = self
         txtTitle.returnKeyType = .Done
 
     }
 
+    // change between situations of enable / disable location based functions
     @IBAction func SegSwiched(sender: UISegmentedControl) {
         if sender.selectedSegmentIndex == 0 {
             // show container
@@ -107,12 +117,14 @@ class AddCategoryViewController: UIViewController, UIPickerViewDelegate, UIPicke
         // Dispose of any resources that can be recreated.
     }
     
+    // when user tap cancel button
     @IBAction func btnCancelPerformed(sender: AnyObject) {
         // hide keyboard, make consistency
         view.endEditing(true)
         dismissViewControllerAnimated(true, completion: nil)
     }
 
+    // when user tap finished button
     func btnFinishPerformed(sender: AnyObject) {
         // validation
         if self.txtTitle.text == nil || (self.txtTitle.text?.isEmpty)!{
@@ -124,6 +136,7 @@ class AddCategoryViewController: UIViewController, UIPickerViewDelegate, UIPicke
             alert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: nil))
             self.presentViewController(alert, animated: true, completion: nil)
         } else {
+            // validation pass. set values to core data object
             view.endEditing(true)
             dismissViewControllerAnimated(true, completion: {
                 // send the data back to homepage.
@@ -201,5 +214,5 @@ class AddCategoryViewController: UIViewController, UIPickerViewDelegate, UIPicke
         view.endEditing(true)
         return true
     }
-
+    
 }

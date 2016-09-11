@@ -8,14 +8,15 @@
 
 import UIKit
 
+// just a place holder to provide some indications for the user in detail view
 class PlaceHolderViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        // potait back button
         self.tabBarController?.tabBar.hidden = true
         self.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem()
-        // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {
